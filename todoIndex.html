@@ -1,0 +1,127 @@
+<!--   HTML Document  @HTML5
+ ---------------------------------------------------------------
+ include common HTML tags  
+ ---------------------------------------------------------------  -->
+
+<!DOCTYPE html>
+
+<head>
+<title>#todo list</title>
+</head>
+
+<body>
+
+  <!-- header of the page -->
+	<header>
+		<p>#Todo List</p>
+	</header>
+
+<!-- main layout of the page -->
+
+<section  id="mainLayout">
+
+<section class="subLayout">
+<input class="tasks" placeholder="Please enter the task"></input>
+</section>
+
+<article class="taskLists">
+
+  <script id="taskTemp" type="text/temp">
+
+    <%=task%>
+    
+     <aside class="editButt"><button class="edit buttonEditDel">edit</button></aside>
+     <aside class="delButt"></aside>
+    
+
+  </script>
+
+</article>
+
+<aside class="taskImage"><img src="images/custom_1.png"></img></aside>
+<aside class="buttonSpace"><button class="butt">Create Task<button><aside>
+
+
+</section>
+
+<!-- end of the main layout -->
+
+<article class="task-count">
+   <p class="taskCount"><span class="taskNumberCount">0</span></p>
+   <p class="taskCountContent"><span> Tasks left </span></p>
+</article>
+
+<!-- canvas circle elements -->
+
+<article class="canvas">
+<canvas class="canvas_cir" width="200px" height="130px"></canvas>
+</article>
+
+
+<article class="olderTasks">
+  <p >Recent Tasks Summary</p>
+  <ul class"generalContent">No Older Tasks left</ul>
+
+
+</article>
+ 
+</body>
+
+<!-- footer of the page -->
+
+
+<footer>
+<p>*Clear Browser to Clear your Tasks<p>
+</footer>
+
+<!-- libraries -->
+<script src="common/jquery-1.11.0.js"></script>
+<script src="common/underscore.js"></script>
+<script src="common/backbone.js"></script>
+
+<script src="js/tasks.js"></script>
+<script>
+
+$(document).ready(function(){
+
+
+this.canvasId=$('.canvas_cir');
+
+/*for canvas circle*/
+  function canvas(){};
+    
+    canvas.prototype={
+    
+      canvasCircle:function(canvasTag){
+      var canvas=canvasTag[0], context=canvas.getContext('2d'), centerX=canvas.width/2, centerY=canvas.height/2;
+      var radius=centerX/2+(centerY-centerX/2);
+      context.beginPath();
+      context.arc(centerX,centerY,radius-2,0,2*Math.PI,false) ;
+      context.lineWidth=3;
+      context.strokeStyle ='#0099cc;';
+      context.stroke();
+      context.closePath();
+     
+   }
+
+  }
+
+var canvas_circle=new canvas();
+canvas_circle.canvasCircle(this.canvasId);
+
+/*for localStorage*/
+window.onbeforeunload =getOlderTasks;
+function getOlderTasks() {
+      this.getTasks=$('.taskLists ul').html();
+      localStorage.setItem('olderTaskContent',this.getTasks);
+ }
+
+  if(localStorage.olderTaskContent!=='')  $('.olderTasks ul').html(localStorage.getItem('olderTaskContent'));
+
+});
+
+</script>
+
+ <link rel="stylesheet" type="text/css" href="css/main.css">
+
+
