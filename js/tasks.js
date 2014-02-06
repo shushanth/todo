@@ -13,7 +13,6 @@
 		defaults:{
 
 			task:''
-
 		}
 	
 	});
@@ -23,9 +22,7 @@
 
 	window.taskCollection=Backbone.Collection.extend({
 
-
 		model: taskModel
-
 
 	});
 
@@ -56,6 +53,7 @@
 
 			var updatedTasks=new taskModel({task:this.newTask.val()}); /*creating tasks model*/
 			this.collection.add(updatedTasks);
+			/*this.putToStorage(taskModel);*/
 
 			this.newTask.val('');
 
@@ -109,11 +107,19 @@
 
 			/*call to get each child elements and build the parent and its structure*/
 			this.view=new taskView({model:taskModel})
-			
-
 			this.$el.append(this.view.render().el);
 			$('.taskCount').html(taskModel.collection.length);
 
+			/*for older tasks left to show*/
+			this.putToStorage(taskModel);
+		},
+
+		putToStorage:function(taskModel){
+			this.conTent=taskModel.collection.toJSON();
+			this.storageContent=new Array();
+			for(var i in this.conTent) {this.storageContent[i]='<li>'+this.conTent[i].task+'</li>';}
+			localStorage.setItem('olderTaskContent',this.storageContent.join(''));
+			
 		},
 
 		taskdelete:function(){

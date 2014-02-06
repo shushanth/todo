@@ -60,7 +60,7 @@
 
 <article class="olderTasks">
   <p >Recent Tasks Summary</p>
-  <ul class"generalContent">No Older Tasks left</ul>
+  <ul class"generalContent"></ul>
 
 
 </article>
@@ -108,17 +108,10 @@ this.canvasId=$('.canvas_cir');
 
 var canvas_circle=new canvas();
 canvas_circle.canvasCircle(this.canvasId);
-
-/*for localStorage*/
-window.onbeforeunload =getOlderTasks;
-function getOlderTasks() {
-      this.getTasks=$('.taskLists ul').html();
-      localStorage.setItem('olderTaskContent',this.getTasks);
- }
-
-  if(localStorage.olderTaskContent!=='')  $('.olderTasks ul').html(localStorage.getItem('olderTaskContent'));
+$('.olderTasks ul').append(localStorage.getItem('olderTaskContent'));
 
 });
+
 
 </script>
 
